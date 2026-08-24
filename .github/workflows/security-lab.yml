@@ -32,3 +32,58 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan
+
+  security-tests:
+    name: Security Tests
+    runs-on: ubuntu-latest
+    needs: terraform-validation
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Start LocalStack
+        uses: LocalStack/setup-localstack@main
+        with:
+          image-tag: latest
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        working-directory: infrastructure/local
+        run: terraform init
+
+      - name: Terraform Apply
+        working-directory: infrastructure/local
+        run: terraform apply -auto-approve
+
+      - name: Start application services
+        working-directory: services
+        env:
+          POSTGRES_USER: labuser
+          POSTGRES_PASSWORD: labpassword
+          POSTGRES_DB: companydb
+        run: docker compose up -d
+
+      - name: Wait for services
+        run: sleep 10
+
+      - name: Run Terraform security tests
+        working-directory: tests
+        run: bash terraform_security.sh
+
+      - name: Run IAM least-privilege tests
+        working-directory: tests
+        run: bash iam_least_privilege.sh
+
+      - name: Run logging security tests
+        working-directory: tests
+        run: bash logging_security.sh
+
+      - name: Run network segmentation tests
+        working-directory: tests
+        run: bash network_segmentation.sh
