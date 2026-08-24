@@ -1,0 +1,9 @@
+.localstack/
+.terraform/
+*.tfstate
+*.tfstate.*
+
+# Local environment variables
+.env
+.env.*
+!.env.example

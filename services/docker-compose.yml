@@ -1,0 +1,37 @@
+services:
+
+  web:
+    image: nginx:alpine
+    container_name: company-web
+    networks:
+      - public
+      - application
+    ports:
+      - "8080:80"
+
+  application:
+    image: nginx:alpine
+    container_name: company-application
+    networks:
+      - application
+      - database
+
+  database:
+    image: postgres:16-alpine
+    container_name: company-database
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - database
+
+networks:
+  public:
+    name: company-public
+
+  application:
+    name: company-application
+
+  database:
+    name: company-database
