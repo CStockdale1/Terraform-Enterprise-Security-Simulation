@@ -76,17 +76,14 @@ jobs:
         run: sleep 10
 
       - name: Run Terraform security tests
-        working-directory: tests
-        run: bash terraform_security.sh
+        run: bash tests/terraform_security.sh
 
       - name: Run IAM least-privilege tests
-        working-directory: tests
-        run: bash iam_least_privilege.sh
+        run: bash tests/iam_least_privilege.sh
 
       - name: Run logging security tests
-        working-directory: tests
-        run: bash logging_security.sh
+        run: bash tests/logging_security.sh
 
       - name: Run network segmentation tests
-        working-directory: tests
-        run: bash network_segmentation.sh
+        run: bash tests/network_segmentation.sh
+
