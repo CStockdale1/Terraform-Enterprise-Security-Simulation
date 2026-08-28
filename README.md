@@ -69,22 +69,24 @@ One change that causes one test to fail, causes the whole workflow to fail.
 
 - To run the lab, you must have the following prerequisites: Docker, Terraform, AWS CLI, LocalStack, and jq.
 
-- Configure the environment variables: 'cp .env.example .env.'
+- Configure the environment variables: ```cp .env.example .env.```
 - Set the required LocalStack authentication token in .env.
 
-- Start LocalStack: 'docker compose up -d'
+- Start LocalStack: ```docker compose up -d```
 - Deploy infrastructure: 
-'''cd infrastructure/local
+```
+cd infrastructure/local
 terraform init
 terraform plan
-terraform apply'''
+terraform apply
+```
 
 - Start application services:
-'''cd ../../services
-docker compose up -d'''
+```cd ../../services
+docker compose up -d```
 
 - Run the security tests from the project root:
-'''bash tests/terraform_security.sh
+```bash tests/terraform_security.sh
 bash tests/iam_least_privilege.sh
 bash tests/logging_security.sh
-bash tests/network_segmentation.sh'''
+bash tests/network_segmentation.sh```
