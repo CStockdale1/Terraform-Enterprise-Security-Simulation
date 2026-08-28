@@ -8,29 +8,29 @@ The project models a simplified enterprise infrastructure environment. I modeled
 
 The goal of the project was to demonstrate that aspects such as:
 
-Infrastructure as Code using Terraform
-Network segmentation
-Least-privilege IAM
-Security group design
-Encrypted storage
-Centralized security logging
-Separation of administrative and application access
-Automated infrastructure security testing
-CI/CD security validation
+- Infrastructure as Code using Terraform
+- Network segmentation
+- Least-privilege IAM
+- Security group design
+- Encrypted storage
+- Centralized security logging
+- Separation of administrative and application access
+- Automated infrastructure security testing
+- CI/CD security validation
 
 Can be built and deployed on localized hardware, without paying out of pocket for an AWS subscription.
 
 ## The Architecture 
 The environment is divided into three network tiers: Public Tier, Application Tier, and Database Tier, with the terraform network being represented by a VPC containing the different subnets. These subnets provide the security segmentation needed for a secure environment:
 
-Public tier takes in internet-facing resources and only allows https from the internet.
-Application tier takes in application workloads and allows https from public tier.
-Database tier provides data storage and only allows PostgreSQL from application tier.
+- Public tier takes in internet-facing resources and only allows https from the internet.
+- Application tier takes in application workloads and allows https from public tier.
+- Database tier provides data storage and only allows PostgreSQL from application tier.
 
 The Docker environment mirrors this architecture using these separate Docker networks:
-company-public
-company-application
-company-database
+- company-public
+- company-application
+- company-database
 
 ## Identity and Access Management
 IAM follows the principle of least privilege, with the environment modeling an application role titled company-application-role. This role is currently permitted to access only the applications designated S3 bucket. 
