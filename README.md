@@ -82,11 +82,15 @@ terraform apply
 ```
 
 - Start application services:
-```cd ../../services
-docker compose up -d```
+```
+cd ../../services
+docker compose up -d
+```
 
 - Run the security tests from the project root:
-```bash tests/terraform_security.sh
+```
+bash tests/terraform_security.sh
 bash tests/iam_least_privilege.sh
 bash tests/logging_security.sh
-bash tests/network_segmentation.sh```
+bash tests/network_segmentation.sh
+```
